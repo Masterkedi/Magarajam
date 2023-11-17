@@ -10,10 +10,12 @@ public class PlayerMovement : MonoBehaviour
     public static bool isMoving=false;
 
     private float horizontal;
-    public float speed = 10f;
+    public float speed = 5f;
     private bool isFacingRight = true;
 
     private Rigidbody2D rb;
+
+    
 
     private void Awake()
     {
@@ -30,7 +32,17 @@ public class PlayerMovement : MonoBehaviour
     }
     private void FixedUpdate()
     {
-        rb.velocity = new Vector2(horizontal * speed, rb.velocity.y);
+       
+        Vector2 x = Vector2.Perpendicular(Gravity.gravity);
+        var y=horizontal* x*speed;
+        var b=Vector2.Dot(rb.velocity,y);
+        if (b<1)
+        {
+            rb.AddForce((y));
+        }
+       
+       
+        
     }
     private void Flip()
     {
